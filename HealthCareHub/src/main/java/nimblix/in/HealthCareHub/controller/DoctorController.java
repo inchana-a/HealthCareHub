@@ -1,9 +1,11 @@
 package nimblix.in.HealthCareHub.controller;
 
 import lombok.RequiredArgsConstructor;
+import nimblix.in.HealthCareHub.constants.HealthCareConstants;
 import nimblix.in.HealthCareHub.request.DoctorAvailabilityRequest;
 import nimblix.in.HealthCareHub.request.DoctorRegistrationRequest;
 import nimblix.in.HealthCareHub.response.DoctorAvailabilityResponse;
+import nimblix.in.HealthCareHub.response.DoctorProfileResponse;
 import nimblix.in.HealthCareHub.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -41,6 +43,20 @@ public class DoctorController {
 
     }
 
+    @GetMapping("/{doctorId}/profile")
+    public ResponseEntity<Map<String, Object>> getDoctorProfile(
+            @PathVariable Long doctorId) {
+
+        DoctorProfileResponse response = doctorService.getDoctorProfile(doctorId);
+
+        Map<String, Object> result = new LinkedHashMap<>();
+        result.put(HealthCareConstants.STATUS, HttpStatus.OK.value());
+        result.put(HealthCareConstants.MESSAGE, HealthCareConstants.DOCTOR_PROFILE_FETCHED_SUCCESSFULLY);
+        result.put(HealthCareConstants.DATA, response);
+
+        return ResponseEntity.ok(result);
+    }
+
     @DeleteMapping("/deleteDoctorDetails")
     public String deleteDoctorDetails(@RequestParam Long doctorId){
         return doctorService.deleteDoctorDetails(doctorId);
@@ -56,9 +72,9 @@ public class DoctorController {
                 doctorService.addDoctorTimeSlot( request);
 
         Map<String, Object> result = new LinkedHashMap<>();
-        result.put("status", HttpStatus.CREATED.value());
-        result.put("message", "Time slot added successfully");
-        result.put("data", response);
+        result.put(HealthCareConstants.STATUS, HttpStatus.CREATED.value());
+        result.put(HealthCareConstants.MESSAGE, HealthCareConstants.TIME_SLOT_ADDED_SUCCESSFULLY );
+        result.put(HealthCareConstants.DATA, response);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
@@ -75,9 +91,9 @@ public class DoctorController {
                 doctorService.updateDoctorTimeSlot(request);
 
         Map<String, Object> result = new LinkedHashMap<>();
-        result.put("status", HttpStatus.OK.value());
-        result.put("message", "Time slot updated successfully");
-        result.put("data", response);
+        result.put(HealthCareConstants.STATUS, HttpStatus.OK.value());
+        result.put(HealthCareConstants.MESSAGE, HealthCareConstants.TIME_SLOT_UPDATED_SUCCESSFULLY );
+        result.put(HealthCareConstants.DATA, response);
 
         return ResponseEntity.ok(result);
     }

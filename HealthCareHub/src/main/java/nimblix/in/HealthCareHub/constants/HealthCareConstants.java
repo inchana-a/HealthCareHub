@@ -13,6 +13,9 @@ public class HealthCareConstants {
     public static final String LOGIN_FAILED ="Login failed" ;
     public static final String ADMIN ="ADMIN";
     public static final String TEACHER ="TEACHER" ;
+    public static final Object DOCTOR_PROFILE_FETCHED_SUCCESSFULLY = "Doctor profile fetched successfully";
+    public static final Object TIME_SLOT_ADDED_SUCCESSFULLY = "Time slot added successfully";
+    public static final Object TIME_SLOT_UPDATED_SUCCESSFULLY = "Time slot updated successfully";
     public static String ROLE_MISMATCH ="Role mismatch" ;
     public static String PAID = "PAID";
     public static String SUBSCRIPTION_ACTIVATED_SUCCESSFULLY ="Subscription activated successfully" ;

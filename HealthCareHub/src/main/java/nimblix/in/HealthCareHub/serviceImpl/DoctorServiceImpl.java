@@ -3,6 +3,7 @@ package nimblix.in.HealthCareHub.serviceImpl;
 import lombok.RequiredArgsConstructor;
 import nimblix.in.HealthCareHub.exception.SlotNotFoundException;
 import nimblix.in.HealthCareHub.constants.HealthCareConstants;
+import nimblix.in.HealthCareHub.exception.DoctorNotFoundException;
 import nimblix.in.HealthCareHub.exception.UserNotFoundException;
 import nimblix.in.HealthCareHub.model.Doctor;
 import nimblix.in.HealthCareHub.model.DoctorAvailability;
@@ -15,6 +16,7 @@ import nimblix.in.HealthCareHub.repository.SpecializationRepository;
 import nimblix.in.HealthCareHub.request.DoctorAvailabilityRequest;
 import nimblix.in.HealthCareHub.request.DoctorRegistrationRequest;
 import nimblix.in.HealthCareHub.response.DoctorAvailabilityResponse;
+import nimblix.in.HealthCareHub.response.DoctorProfileResponse;
 import nimblix.in.HealthCareHub.service.DoctorService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -346,6 +348,14 @@ public class DoctorServiceImpl implements DoctorService {
         doctorRepository.save(doctor);
 
         return "Doctor deleted successfully (Hard Delete)";
+    }
+    @Override
+    public DoctorProfileResponse getDoctorProfile(Long doctorId) {
+
+        return doctorRepository.findDoctorProfileById(doctorId)
+                .orElseThrow(() ->
+                        new DoctorNotFoundException("Doctor not found with id: " + doctorId)
+                );
     }
 
 
